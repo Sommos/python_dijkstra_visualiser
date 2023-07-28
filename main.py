@@ -12,6 +12,30 @@ G.add_edge("C", "D", weight = 3)
 G.add_edge("D", "E", weight = 7)
 G.add_edge("E", "F", weight = 6)
 
+def create_graph():
+    # create a graph
+    G = nx.Graph()
+
+    # add user defined nodes to the graph
+    num_nodes = int(input("Enter the number of nodes you would like in your graph: "))
+    # loop through the number of nodes, and ask the user to name each node
+    for i in range(num_nodes):
+        node_name = input(f"Enter the name of node {i + 1}: ")
+
+    # add user defined edges to the graph
+    num_edges = int(input("Enter the number of edges you would like in your graph: "))
+    # loop through the number of edges, and ask the user to define each edge
+    for i in range(num_edges):
+        # ask the user to define the edge, along with the weight of the edge
+        edge_info = input(f"Enter edge {i + 1} (format: 'source_node target_node weight'): ")
+        # split the user input into the source node, target node, and weight
+        source, target, weight = edge_info.split()
+        # add the edge to the graph
+        G.add_edge(source, target, weight = int(weight))
+    
+    # return the graph
+    return G
+
 def dijkstra(graph, start):
     # initialize the distance of each node to infinity
     distances = {node: float("inf") for node in graph.nodes}
@@ -33,7 +57,8 @@ def dijkstra(graph, start):
             # from the start node to the minimum distance node plus the weight of the edge between 
             # the minimum distance node and the neighbor node
             distances[neighbor] = min(distances[neighbor], distances[min_node] + weight["weight"])
-        
+
+    # return the distances dictionary 
     return distances
 
 def visualise_dijkstra(graph, start):
@@ -55,5 +80,6 @@ def visualise_dijkstra(graph, start):
         print(f"{node}: {distance}")
 
 if __name__ == "__main__":
-    start_node = "A"
-    visualise_dijkstra(G, start_node)
+    user_graph = create_graph()
+    start_node = input("Enter the start node: ")
+    visualise_dijkstra(user_graph, start_node)
