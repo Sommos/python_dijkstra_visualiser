@@ -36,3 +36,24 @@ def dijkstra(graph, start):
         
     return distances
 
+def visualise_dijkstra(graph, start):
+    distances = dijkstra(graph, start)
+    pos = nx.spring_layout(graph)
+    # draw the graph with basic styling
+    nx.draw(graph, pos, with_labels = True, node_color = "skyblue", node_size = 1500, font_size = 10, font_weight = "bold")
+    # build labels for the nodes
+    labels = nx.get_edge_attributes(graph, "weight")
+    # draw the labels onto the graph
+    nx.draw_networkx_edge_labels(graph, pos, edge_labels = labels, font_size = 8)
+
+    plt.title("Dijkstra's Algorithm Visualisation")
+    plt.show()
+
+    print("Shortest distances from the start node:")
+    # loop distances dictionary and print the distance of each node from the start node
+    for node, distance in distances.items():
+        print(f"{node}: {distance}")
+
+if __name__ == "__main__":
+    start_node = "A"
+    visualise_dijkstra(G, start_node)
