@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import networkx as nx
 
-# create a graph
+# create a graph for testing
 G = nx.Graph()
 # add nodes to the graph
 G.add_edge("A", "B", weight = 4)
@@ -62,7 +62,12 @@ def dijkstra(graph, start):
     return distances
 
 def visualise_dijkstra(graph, start):
-    distances = dijkstra(graph, start)
+    # check if start node is in the graph
+    if start not in graph.nodes:
+        print("Start node not found in graph")
+        return
+    
+    distances, paths = dijkstra(graph, start)
     pos = nx.spring_layout(graph)
     # draw the graph with basic styling
     nx.draw(graph, pos, with_labels = True, node_color = "skyblue", node_size = 1500, font_size = 10, font_weight = "bold")
@@ -78,6 +83,11 @@ def visualise_dijkstra(graph, start):
     # loop distances dictionary and print the distance of each node from the start node
     for node, distance in distances.items():
         print(f"{node}: {distance}")
+
+    print("Shortest paths from the start node:")
+    # loop paths dictionary and print the path of each node from the start node
+    for node, path in paths.items():
+        print(f"{node}: {' -> '.join(path)}")
 
 if __name__ == "__main__":
     user_graph = create_graph()
